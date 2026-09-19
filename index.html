@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="ms">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Countdown - Glorious Generation 2226
+    </title>
+
+
+    <style>
+
+        /* =========================================
+           RESET
+        ========================================= */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+
+            box-sizing: border-box;
+
+            font-family:
+                'Segoe UI',
+                Tahoma,
+                Geneva,
+                Verdana,
+                sans-serif;
+
+        }
+
+
+        /* =========================================
+           BODY
+        ========================================= */
+
+        body {
+
+            width: 100vw;
+            height: 100vh;
+
+            overflow: hidden;
+
+            color: white;
+
+            position: relative;
+
+            background: #35030d;
+
+        }
+
+
+        /* =========================================
+           BACKGROUND GAMBAR GROUP
+        ========================================= */
+
+        .background {
+
+            position: fixed;
+
+            inset: 0;
+
+            background-image:
+                url("group.jpg");
+
+            background-size: cover;
+
+            background-position:
+                center center;
+
+            background-repeat:
+                no-repeat;
+
+            /*
+                Blur supaya gambar tidak terlalu
+                mengganggu tulisan
+            */
+
+            filter:
+                blur(4px);
+
+            /*
+                Elak bahagian tepi putih
+                akibat blur
+            */
+
+            transform:
+                scale(1.06);
+
+            z-index: -5;
+
+        }
+
+
+        /* =========================================
+           GRADIENT OVERLAY UTAMA
+        ========================================= */
+
+        .overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+
+                /* Glow kiri atas */
+
+                radial-gradient(
+                    circle at 8% 12%,
+                    rgba(
+                        255,
+                        150,
+                        50,
+                        0.30
+                    ),
+                    transparent 28%
+                ),
+
+                /* Glow kanan bawah */
+
+                radial-gradient(
+                    circle at 92% 88%,
+                    rgba(
+                        255,
+                        100,
+                        30,
+                        0.28
+                    ),
+                    transparent 30%
+                ),
+
+                /* Glow tengah */
+
+                radial-gradient(
+                    circle at 50% 45%,
+                    rgba(
+                        150,
+                        0,
+                        45,
+                        0.25
+                    ),
+                    transparent 55%
+                ),
+
+                /* Gradient utama */
+
+                linear-gradient(
+                    135deg,
+
+                    rgba(
+                        35,
+                        3,
+                        8,
+                        0.84
+                    ),
+
+                    rgba(
+                        85,
+                        4,
+                        22,
+                        0.78
+                    ),
+
+                    rgba(
+                        145,
+                        0,
+                        42,
+                        0.70
+                    ),
+
+                    rgba(
+                        65,
+                        3,
+                        15,
+                        0.84
+                    )
+                );
+
+            z-index: -4;
+
+        }
+        .top-logo {
+    position: fixed;
+    top: -60px;
+    right: -60px;
+    width: 410px;
+    height: auto;
+    z-index: 10;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+}
+
+
+        /* =========================================
+           GLOW / VIGNETTE
+        ========================================= */
+
+        .vignette {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+
+                radial-gradient(
+                    ellipse at center,
+                    transparent 35%,
+                    rgba(
+                        20,
+                        0,
+                        5,
+                        0.50
+                    ) 100%
+                );
+
+            pointer-events: none;
+
+            z-index: -3;
+
+        }
+
+
+        /* =========================================
+           GOLD DECORATION
+        ========================================= */
+
+        .gold-line {
+
+            position: fixed;
+
+            width: 260px;
+
+            height: 3px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #ffd700,
+                    #fff1a8,
+                    #ffd700,
+                    transparent
+                );
+
+            opacity: 0.75;
+
+            filter:
+                drop-shadow(
+                    0 0 8px
+                    rgba(
+                        255,
+                        215,
+                        0,
+                        0.65
+                    )
+                );
+
+        }
+
+
+        .gold-line.top {
+
+            top: 45px;
+
+            left: -50px;
+
+            transform:
+                rotate(-35deg);
+
+        }
+
+
+        .gold-line.bottom {
+
+            bottom: 45px;
+
+            right: -50px;
+
+            transform:
+                rotate(-35deg);
+
+        }
+
+
+        /* =========================================
+           CONTENT
+        ========================================= */
+
+        .content {
+
+            width: 100%;
+
+            height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+
+            text-align: center;
+
+            padding:
+                35px;
+
+        }
+
+
+        /* =========================================
+           BADGE
+        ========================================= */
+
+        .badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            padding:
+                10px 35px;
+
+            min-height: 68px;
+
+            border-radius: 50px;
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    rgba(
+                        30,
+                        5,
+                        8,
+                        0.88
+                    ),
+                    rgba(
+                        90,
+                        10,
+                        20,
+                        0.75
+                    )
+                );
+
+            border:
+                2px solid
+                rgba(
+                    255,
+                    215,
+                    0,
+                    0.90
+                );
+
+            color: #ffd700;
+
+            font-size:
+                clamp(
+                    1rem,
+                    1.5vw,
+                    1.4rem
+                );
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom:
+                25px;
+
+            box-shadow:
+
+                0 0 20px
+                rgba(
+                    255,
+                    180,
+                    50,
+                    0.18
+                ),
+
+                inset 0 0 15px
+                rgba(
+                    255,
+                    215,
+                    0,
+                    0.06
+                );
+
+            backdrop-filter:
+                blur(12px);
+
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .badge-logo {
+
+            height:
+                2.5em;
+
+            width:
+                auto;
+
+            max-width:
+                70px;
+
+            object-fit:
+                contain;
+
+        }
+
+
+        /* =========================================
+           TAJUK
+        ========================================= */
+
+        h1 {
+
+            font-size:
+
+                clamp(
+                    3rem,
+                    6vw,
+                    6rem
+                );
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                3px;
+
+            line-height:
+                1;
+
+            color:
+                #ffffff;
+
+            text-shadow:
+
+                0 4px 0
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.20
+                ),
+
+                0 8px 25px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.70
+                );
+
+        }
+
+
+        /* =========================================
+           GOLD LINE BAWAH TAJUK
+        ========================================= */
+
+        .title-line {
+
+            width:
+                min(
+                    700px,
+                    60vw
+                );
+
+            height:
+                2px;
+
+            margin-top:
+                14px;
+
+            margin-bottom:
+                12px;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #ffd700,
+                    #fff3b0,
+                    #ffd700,
+                    transparent
+                );
+
+            box-shadow:
+
+                0 0 10px
+                rgba(
+                    255,
+                    215,
+                    0,
+                    0.55
+                );
+
+        }
+
+
+        /* =========================================
+           TARIKH
+        ========================================= */
+
+        p.date-info {
+
+            font-size:
+
+                clamp(
+                    1rem,
+                    1.8vw,
+                    1.5rem
+                );
+
+            color:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.92
+                );
+
+            margin-top:
+                0;
+
+            text-shadow:
+
+                0 3px 10px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.75
+                );
+
+        }
+
+
+        /* =========================================
+           COUNTDOWN CONTAINER
+        ========================================= */
+
+        .countdown-container {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                clamp(
+                    12px,
+                    1.8vw,
+                    28px
+                );
+
+            margin-top:
+                38px;
+
+        }
+
+
+        /* =========================================
+           TIME BOX
+        ========================================= */
+
+        .time-box {
+
+            width:
+                clamp(
+                    150px,
+                    12vw,
+                    220px
+                );
+
+            height:
+                clamp(
+                    150px,
+                    16vw,
+                    200px
+                );
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            border-radius:
+                22px;
+
+            background:
+
+                linear-gradient(
+                    145deg,
+
+                    rgba(
+                        105,
+                        8,
+                        28,
+                        0.72
+                    ),
+
+                    rgba(
+                        35,
+                        3,
+                        13,
+                        0.82
+                    )
+                );
+
+            border:
+                2px solid
+                rgba(
+                    255,
+                    215,
+                    140,
+                    0.50
+                );
+
+            backdrop-filter:
+                blur(14px);
+
+            box-shadow:
+
+                0 15px 35px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.50
+                ),
+
+                inset 0 0 20px
+                rgba(
+                    255,
+                    80,
+                    80,
+                    0.04
+                );
+
+            transition:
+                all 0.3s ease;
+
+        }
+
+
+        /* Hover */
+
+        .time-box:hover {
+
+            transform:
+                translateY(-6px);
+
+            border-color:
+                #ffd700;
+
+            box-shadow:
+
+                0 18px 40px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.55
+                ),
+
+                0 0 20px
+                rgba(
+                    255,
+                    215,
+                    0,
+                    0.15
+                );
+
+        }
+
+
+        /* =========================================
+           NOMBOR
+        ========================================= */
+
+        .number {
+
+            font-size:
+
+                clamp(
+                    3rem,
+                    5vw,
+                    5rem
+                );
+
+            font-weight:
+                900;
+
+            line-height:
+                1;
+
+            color:
+                #ffffff;
+
+            text-shadow:
+
+                0 4px 15px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.70
+                );
+
+        }
+
+
+        /* =========================================
+           LABEL
+        ========================================= */
+
+        .label {
+
+            margin-top:
+                15px;
+
+            font-size:
+
+                clamp(
+                    0.85rem,
+                    1.2vw,
+                    1.2rem
+                );
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                2px;
+
+            text-transform:
+                uppercase;
+
+            color:
+                #ffd700;
+
+            text-shadow:
+
+                0 2px 8px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.70
+                );
+
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .footer {
+
+            max-width:
+                1200px;
+
+            margin-top:
+                35px;
+
+            font-size:
+
+                clamp(
+                    0.75rem,
+                    1.2vw,
+                    1.05rem
+                );
+
+            line-height:
+                1.7;
+
+            color:
+
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.90
+                );
+
+            text-shadow:
+
+                0 2px 8px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.85
+                );
+
+        }
+
+
+        /* =========================================
+           MOBILE / SKRIN KECIL
+        ========================================= */
+
+        @media (max-width: 800px) {
+
+            .content {
+
+                padding:
+                    20px;
+
+            }
+
+
+            .badge {
+
+                padding:
+                    8px 20px;
+
+                min-height:
+                    55px;
+
+            }
+
+
+            .countdown-container {
+
+                gap:
+                    6px;
+
+                margin-top:
+                    25px;
+
+            }
+
+
+            .time-box {
+
+                width:
+                    23vw;
+
+                height:
+                    130px;
+
+                border-radius:
+                    15px;
+
+            }
+
+
+            .number {
+
+                font-size:
+                    2.5rem;
+
+            }
+
+
+            .label {
+
+                font-size:
+                    0.7rem;
+
+                letter-spacing:
+                    1px;
+
+            }
+
+
+            .footer {
+
+                margin-top:
+                    22px;
+
+            }
+
+        }
+
+
+        /* =========================================
+           FULLSCREEN
+        ========================================= */
+
+        :fullscreen .content {
+
+            height:
+                100vh;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+    <img src="logo.png" class="top-logo" alt="Logo">
+
+
+    <!-- =========================================
+         BACKGROUND
+    ========================================= -->
+
+    <div class="background"></div>
+
+
+    <!-- =========================================
+         GRADIENT
+    ========================================= -->
+
+    <div class="overlay"></div>
+
+
+    <!-- =========================================
+         VIGNETTE
+    ========================================= -->
+
+    <div class="vignette"></div>
+
+
+    <!-- =========================================
+         DECORATION
+    ========================================= -->
+
+    <div class="gold-line top"></div>
+
+    <div class="gold-line bottom"></div>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================= -->
+
+    <main class="content">
+
+
+        <!-- BADGE -->
+
+        <div class="badge">
+
+            <img
+                src="logo.png"
+                alt="Logo Batch"
+                class="badge-logo"
+            >
+
+            <span>
+                Glorious Generation 2226
+            </span>
+
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1>
+            COUNTDOWN SPM
+        </h1>
+
+
+        <!-- GOLD LINE -->
+
+        <div class="title-line"></div>
+
+
+        <!-- DATE -->
+
+        <p class="date-info">
+
+            Isnin, 26 Oktober 2026 |
+            8:00 Pagi (MYT)
+
+        </p>
+
+
+        <!-- =====================================
+             COUNTDOWN
+        ====================================== -->
+
+        <div class="countdown-container">
+
+
+            <!-- HARI -->
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="days"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Hari
+                </div>
+
+            </div>
+
+
+            <!-- JAM -->
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="hours"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Jam
+                </div>
+
+            </div>
+
+
+            <!-- MINIT -->
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="minutes"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Minit
+                </div>
+
+            </div>
+
+
+            <!-- SAAT -->
+
+            <div class="time-box">
+
+                <div
+                    class="number"
+                    id="seconds"
+                >
+                    00
+                </div>
+
+                <div class="label">
+                    Saat
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <div class="footer">
+
+            Semoga Allah memberkati setiap usaha kami,
+            memudahkan urusan kami, dan mengurniakan
+            kejayaan yang terbaik
+
+            <br>
+
+            GP 1.67 & Straight A+ SPM 2026. 🤲🏻
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+
+        /* =====================================
+           TARIKH SASARAN
+        ===================================== */
+
+        const targetDate =
+
+            new Date(
+                "October 26, 2026 08:00:00"
+            ).getTime();
+
+
+
+        /* =====================================
+           COUNTDOWN FUNCTION
+        ===================================== */
+
+        function updateCountdown() {
+
+
+            const now =
+                new Date().getTime();
+
+
+            const difference =
+                targetDate - now;
+
+
+            if (
+                difference > 0
+            ) {
+
+
+                /* HARI */
+
+                const days =
+
+                    Math.floor(
+
+                        difference /
+                        (
+                            1000 *
+                            60 *
+                            60 *
+                            24
+                        )
+
+                    );
+
+
+                /* JAM */
+
+                const hours =
+
+                    Math.floor(
+
+                        (
+                            difference %
+                            (
+                                1000 *
+                                60 *
+                                60 *
+                                24
+                            )
+                        )
+
+                        /
+
+                        (
+                            1000 *
+                            60 *
+                            60
+                        )
+
+                    );
+
+
+                /* MINIT */
+
+                const minutes =
+
+                    Math.floor(
+
+                        (
+                            difference %
+                            (
+                                1000 *
+                                60 *
+                                60
+                            )
+                        )
+
+                        /
+
+                        (
+                            1000 *
+                            60
+                        )
+
+                    );
+
+
+                /* SAAT */
+
+                const seconds =
+
+                    Math.floor(
+
+                        (
+                            difference %
+                            (
+                                1000 *
+                                60
+                            )
+                        )
+
+                        /
+
+                        1000
+
+                    );
+
+
+                /* UPDATE HTML */
+
+                document
+                    .getElementById("days")
+                    .innerText =
+
+                    String(days)
+                    .padStart(2, '0');
+
+
+                document
+                    .getElementById("hours")
+                    .innerText =
+
+                    String(hours)
+                    .padStart(2, '0');
+
+
+                document
+                    .getElementById("minutes")
+                    .innerText =
+
+                    String(minutes)
+                    .padStart(2, '0');
+
+
+                document
+                    .getElementById("seconds")
+                    .innerText =
+
+                    String(seconds)
+                    .padStart(2, '0');
+
+            }
+
+
+            else {
+
+
+                document
+                    .querySelector(
+                        ".countdown-container"
+                    )
+                    .innerHTML =
+
+                    `
+
+                    <h1
+                        style="
+                            color:#ffd700;
+                            font-size:3rem;
+                        "
+                    >
+                        HARI KEJADIAN TELAH TIBA!
+                    </h1>
+
+                    `;
+
+            }
+
+        }
+
+
+        /* =====================================
+           UPDATE SETIAP 1 SAAT
+        ===================================== */
+
+        setInterval(
+            updateCountdown,
+            1000
+        );
+
+
+        /* =====================================
+           RUN PERTAMA
+        ===================================== */
+
+        updateCountdown();
+        setInterval(function() {
+        location.reload();
+    }, 60 * 60 * 1000);
+
+
+    </script>
+
+
+</body>
+
+</html>
